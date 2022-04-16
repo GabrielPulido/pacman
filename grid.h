@@ -14,6 +14,8 @@ public:
 
     static double marginBottom;
     static double marginTop;
+    static double marginLeft;
+    static double marginRight;
 
     static double height; //percentage of page in terms of opengl
     static double width; //in terms of opengl
@@ -23,6 +25,10 @@ public:
     static double left_border;
     static double bottom_border;
     static double right_border;
+
+    //How much to increment
+    static double xIncrement;
+    static double yIncrement;
 
     static void draw();
     static void drawSquare(double col, double row); //Draws a square at a specific column & row

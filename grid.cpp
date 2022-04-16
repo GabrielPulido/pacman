@@ -4,12 +4,16 @@ double Grid::columns = 26.0;
 double Grid::rows = 29.0;
 double Grid::marginBottom = 0.075;
 double Grid::marginTop = 0.075;
+double Grid::marginLeft = 0.075;
+double Grid::marginRight = 0.075;
 double Grid::height = 2.0 - marginBottom - marginTop;
-double Grid::width = 2.0;
-double Grid::left_border = -1.0;
+double Grid::width = 2.0 - marginLeft - marginRight;
+double Grid::left_border = -1.0 + marginLeft;
 double Grid::bottom_border = -1.0 + marginBottom;
-double Grid::right_border = 1.0;
+double Grid::right_border = 1.0 - marginRight;
 double Grid::top_border = 1.0 - marginTop;
+double Grid::xIncrement = width / columns;
+double Grid::yIncrement = height / rows;
 
 //pacman grid is 26x29
 //draws grid
@@ -18,12 +22,8 @@ void Grid::draw() {
     double x = width/columns;
     double y = height/rows;
 
-    double current_left = left_border;
-    double current_bottom = top_border - y;
-    double current_right = left_border + x;
-    double current_top = top_border;
-
     //Draw vertical lines
+    double current_left = left_border;
     for(int i = 0; i <= Grid::columns; i++) {
         glBegin(GL_LINES);
         glColor3f(1.0f, 1.0f, 1.0f);
@@ -34,6 +34,7 @@ void Grid::draw() {
     }
 
     //Draw Horizontal lines
+    double current_top = top_border;
     for(int i = 0; i <= Grid::rows; i++) {
         glBegin(GL_LINES);
         glColor3f(1.0f, 1.0f, 1.0f);
@@ -42,10 +43,9 @@ void Grid::draw() {
         glEnd();
         current_top -= y;
     }
-    glEnd();
 }
 
-//returns the center of a specific coordinate on the grid so that you can draw it with opengl
+//draws a square in the specific column & row you specify
 void Grid::drawSquare(double desiredColumn, double desiredRow) {
     double xIncrement = width / columns;
     double left = left_border + (xIncrement * desiredColumn); //left side of square
@@ -58,7 +58,7 @@ void Grid::drawSquare(double desiredColumn, double desiredRow) {
 
     //draw square
     glBegin(GL_QUADS);
-    glColor3f(0.0f, 0.0f, 1.0f);
+    glColor3f(1.0f, 1.0f, 0.0f);
     glVertex2d(left, top);
     glVertex2d(left, bottom);
     glVertex2d(right, bottom);

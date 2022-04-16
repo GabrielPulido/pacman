@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
 {
     //Tells qt that we're using opengl instead of qpainter
     setSurfaceType(QWindow::OpenGLSurface);
@@ -43,13 +43,11 @@ void MainWindow::resizeGL(int w, int h)
 
 void MainWindow::paintGL()
 {
-    //we call these functions to remove the previously rendered buffer
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
     Grid::draw();
-    Grid::drawSquare(1.0, 1.0);
-    Grid::drawSquare(25.0, 28.0);
+    Grid::drawSquare(pacman.x, pacman.y);
 
     //always call this after you're done drawing everything
     glFlush();
@@ -65,5 +63,24 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     paintGL();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event){
+    float increment = 0.01f;
+
+    if (event->key() == Qt::Key_Up) {
+        pacman.y--;
+    }
+    if (event->key() == Qt::Key_Down) {
+        pacman.y++;
+    }
+    if (event->key() == Qt::Key_Left) {
+        pacman.x--;
+    }
+    if (event->key() == Qt::Key_Right) {
+        pacman.x++;
+    }
+
+    this->update();
 }
 

@@ -8,6 +8,7 @@
 #include <QtOpenGL>
 #include "glfw3.h"
 #include "grid.h"
+#include "pacman.h"
 
 class MainWindow : public QOpenGLWindow
 {
@@ -16,6 +17,8 @@ class MainWindow : public QOpenGLWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void keyPressEvent(QKeyEvent *);
+
 
 protected:
     virtual void initializeGL();
@@ -27,6 +30,6 @@ protected:
 private:
     QOpenGLContext* context;
     QOpenGLFunctions* openGLFunctions;
-    void drawGrid();
+    Pacman pacman;
 };
 #endif // MAINWINDOW_H

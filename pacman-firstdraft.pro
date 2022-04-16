@@ -12,11 +12,13 @@ CONFIG += c++11
 SOURCES += \
     grid.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    pacman.cpp
 
 HEADERS += \
     grid.h \
-    mainwindow.h
+    mainwindow.h \
+    pacman.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
