@@ -17,6 +17,11 @@ MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
     context->create();
     context->makeCurrent(this);
     openGLFunctions = context->functions();
+
+    //start timer
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()),this, SLOT(UpdateAnimation()));
+    timer->start(100);
 }
 
 MainWindow::~MainWindow()
@@ -69,10 +74,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
     float increment = 0.01f;
 
     if (event->key() == Qt::Key_Up) {
-        pacman.y--;
+        pacman.y++;
     }
     if (event->key() == Qt::Key_Down) {
-        pacman.y++;
+        pacman.y--;
     }
     if (event->key() == Qt::Key_Left) {
         pacman.x--;
@@ -81,6 +86,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         pacman.x++;
     }
 
+
+//    if (event->key() == Qt::Key_Up) {
+//        pacman.direction = pacman.up;
+//    }
+//    if (event->key() == Qt::Key_Down) {
+//        pacman.direction = pacman.down;
+//    }
+//    if (event->key() == Qt::Key_Left) {
+//        pacman.direction = pacman.left;
+//    }
+//    if (event->key() == Qt::Key_Right) {
+//        pacman.direction = pacman.right;
+//    }
+
     this->update();
 }
 
+void MainWindow::UpdateAnimation() {
+//    pacman.x = Grid::xIncrement / 10.0;
+//    if(pacman.direction == pacman.up) {
+//        pacman.y += Grid::yIncrement / 10.0;
+//    }
+//    if(pacman.direction == pacman.down) {
+//        pacman.y -= Grid::yIncrement / 10.0;
+//    }
+//    if(pacman.direction == pacman.left) {
+//        pacman.x -= Grid::xIncrement / 10.0;
+//    }
+//    if(pacman.direction == pacman.right) {
+//        pacman.x += Grid::xIncrement / 10.0;
+//    }
+//    this->update();
+}

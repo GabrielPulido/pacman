@@ -19,6 +19,8 @@ public:
     ~MainWindow();
     void keyPressEvent(QKeyEvent *);
 
+public slots:
+    void UpdateAnimation();
 
 protected:
     virtual void initializeGL();
