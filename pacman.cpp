@@ -2,9 +2,8 @@
 
 Pacman::Pacman()
 {
-    x = 1.0;
-    y = 1.0;
-//    Direction direction = right;
+    x = 2.0;
+    y = 2.0;
     Direction direction;
 }
 

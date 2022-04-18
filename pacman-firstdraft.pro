@@ -13,12 +13,14 @@ SOURCES += \
     grid.cpp \
     main.cpp \
     mainwindow.cpp \
-    pacman.cpp
+    pacman.cpp \
+    square.cpp
 
 HEADERS += \
     grid.h \
     mainwindow.h \
-    pacman.h
+    pacman.h \
+    square.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

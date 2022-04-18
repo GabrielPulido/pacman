@@ -1,21 +1,24 @@
 #include "grid.h"
+Grid::Grid()
+{
+    columns = 28.0;
+    rows = 31.0;
+    marginBottom = 0.075;
+    marginTop = 0.075;
+    marginLeft = 0.075;
+    marginRight = 0.075;
+    height = 2.0 - marginBottom - marginTop;
+    width = 2.0 - marginLeft - marginRight;
+    left_border = -1.0 + marginLeft;
+    bottom_border = -1.0 + marginBottom;
+    right_border = 1.0 - marginRight;
+    top_border = 1.0 - marginTop;
+    squareWidth = width / columns;
+    squareHeight = height / rows;
 
-float Grid::columns = 26.0;
-float Grid::rows = 29.0;
-float Grid::marginBottom = 0.075;
-float Grid::marginTop = 0.075;
-float Grid::marginLeft = 0.075;
-float Grid::marginRight = 0.075;
-float Grid::height = 2.0 - marginBottom - marginTop;
-float Grid::width = 2.0 - marginLeft - marginRight;
-float Grid::left_border = -1.0 + marginLeft;
-float Grid::bottom_border = -1.0 + marginBottom;
-float Grid::right_border = 1.0 - marginRight;
-float Grid::top_border = 1.0 - marginTop;
-float Grid::xIncrement = width / columns;
-float Grid::yIncrement = height / rows;
+    Square squares[(int)columns][(int)rows];
+}
 
-// pacman grid is 26x29
 // draws grid
 void Grid::draw()
 {
@@ -25,7 +28,7 @@ void Grid::draw()
 
     // Draw vertical lines
     float current_left = left_border;
-    for (int i = 0; i <= Grid::columns; i++)
+    for (int i = 0; i <= columns; i++)
     {
         glBegin(GL_LINES);
         glColor3f(1.0f, 1.0f, 1.0f);
@@ -37,7 +40,7 @@ void Grid::draw()
 
     // Draw Horizontal lines
     double current_top = top_border;
-    for (int i = 0; i <= Grid::rows; i++)
+    for (int i = 0; i <= rows; i++)
     {
         glBegin(GL_LINES);
         glColor3f(1.0f, 1.0f, 1.0f);
@@ -49,20 +52,19 @@ void Grid::draw()
 }
 
 // draws a square in the specific column & row you specify
-void Grid::drawSquare(float desiredColumn, float desiredRow)
+//ex) an input of (1,1) will draw a square on the bottom left corner of the grid
+void Grid::drawSquare(float desiredColumn, float desiredRow, float r, float g, float b)
 {
-    float xIncrement = width / columns;
-    float yIncrement = height / rows;
 
-    float left = left_border + (xIncrement * (desiredColumn - 1));
-    float top = bottom_border + (yIncrement * desiredRow);
+    float left = left_border + (squareWidth * (desiredColumn - 1));
+    float top = bottom_border + (squareHeight * desiredRow);
 
-    float bottom = top - yIncrement;
-    float right = left + xIncrement;
+    float bottom = top - squareHeight;
+    float right = left + squareWidth;
 
     // draw square
     glBegin(GL_QUADS);
-    glColor3f(1.0f, 1.0f, 0.0f);
+    glColor3f(r, g, b);
     glVertex2f(left, top);
     glVertex2f(left, bottom);
     glVertex2f(right, bottom);
@@ -70,14 +72,51 @@ void Grid::drawSquare(float desiredColumn, float desiredRow)
     glEnd();
 }
 
-// void Grid::drawSquareV2(float x, float y)
-//{
-//     //draw square
-//     glBegin(GL_QUADS);
-//     glColor3f(1.0f, 1.0f, 0.0f);
-//     glVertex2f(x, -y);
-//     glVertex2f(left, bottom);
-//     glVertex2f(right, bottom);
-//     glVertex2f(right, top);
-//     glEnd();
-// }
+ void Grid::drawSquareBlue(float desiredColumn, float desiredRow)
+{
+     float left = left_border + (squareWidth * (desiredColumn - 1));
+     float top = bottom_border + (squareHeight * desiredRow);
+
+     float bottom = top - squareHeight;
+     float right = left + squareWidth;
+
+     // draw square
+     glBegin(GL_QUADS);
+     glColor3f(0.0f, 0.0f, 1.0f);
+     glVertex2f(left, top);
+     glVertex2f(left, bottom);
+     glVertex2f(right, bottom);
+     glVertex2f(right, top);
+     glEnd();
+ }
+
+ //This function uses fixed values so if you change the size of the grid, it'll mess up the map
+ void Grid::drawMap()
+ {   
+//     //draw upside down T on the bottom right (blue)
+//     for(int i = columns-2; i >= 16; i--) {
+//         drawSquare(i, 3, 0.0f, 0.0f, 1.0f);
+//     }
+
+//     //draw upside down T on the bottom left (blue)
+//     for(int i = 3; i <= 12; i++) {
+//         drawSquare(i, 3, 0.0f, 0.0f, 1.0f);
+//     }
+
+//     //draw bottom & top strip of blue squares
+//     for(int i = 1; i <= columns; i++) {
+//         drawSquare(i, 1, 0.0f, 0.0f, 1.0f);
+//         drawSquare(i, rows, 0.0f, 0.0f, 1.0f);
+//     }
+
+//     //draw left & right strips of blue squares
+//     for(int i = 1; i <= rows; i++) {
+//         drawSquare(1, i, 0.0f, 0.0f, 1.0f);
+//         drawSquare(columns, i, 0.0f, 0.0f, 1.0f);
+//     }
+
+//    //draw bottom strip of white squares
+//    for(int i = 2; i < columns; i++) {
+//        drawSquare(i, 2, 1.0f, 1.0f, 1.0f);
+//    }
+ }

@@ -51,8 +51,8 @@ void MainWindow::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    Grid::draw();
-    Grid::drawSquare(pacman.x, pacman.y);
+    grid.draw();
+    grid.drawSquare(pacman.x, pacman.y, 1.0f, 1.0f, 0.0f);
 
     //always call this after you're done drawing everything
     glFlush();
@@ -71,51 +71,33 @@ void MainWindow::paintEvent(QPaintEvent *event)
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
-    float increment = 0.01f;
-
     if (event->key() == Qt::Key_Up) {
-        pacman.y++;
+        pacman.direction = pacman.up;
     }
     if (event->key() == Qt::Key_Down) {
-        pacman.y--;
+        pacman.direction = pacman.down;
     }
     if (event->key() == Qt::Key_Left) {
-        pacman.x--;
+        pacman.direction = pacman.left;
     }
     if (event->key() == Qt::Key_Right) {
-        pacman.x++;
+        pacman.direction = pacman.right;
     }
-
-
-//    if (event->key() == Qt::Key_Up) {
-//        pacman.direction = pacman.up;
-//    }
-//    if (event->key() == Qt::Key_Down) {
-//        pacman.direction = pacman.down;
-//    }
-//    if (event->key() == Qt::Key_Left) {
-//        pacman.direction = pacman.left;
-//    }
-//    if (event->key() == Qt::Key_Right) {
-//        pacman.direction = pacman.right;
-//    }
-
-    this->update();
 }
 
 void MainWindow::UpdateAnimation() {
-//    pacman.x = Grid::xIncrement / 10.0;
-//    if(pacman.direction == pacman.up) {
-//        pacman.y += Grid::yIncrement / 10.0;
-//    }
-//    if(pacman.direction == pacman.down) {
-//        pacman.y -= Grid::yIncrement / 10.0;
-//    }
-//    if(pacman.direction == pacman.left) {
-//        pacman.x -= Grid::xIncrement / 10.0;
-//    }
-//    if(pacman.direction == pacman.right) {
-//        pacman.x += Grid::xIncrement / 10.0;
-//    }
-//    this->update();
+    float num = 1.0f;
+    if(pacman.direction == pacman.up) {
+        pacman.y += num;
+    }
+    if(pacman.direction == pacman.down) {
+        pacman.y -= num;
+    }
+    if(pacman.direction == pacman.left) {
+        pacman.x -= num;
+    }
+    if(pacman.direction == pacman.right) {
+        pacman.x += num;
+    }
+    this->update();
 }

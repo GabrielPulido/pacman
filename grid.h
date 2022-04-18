@@ -2,36 +2,38 @@
 #define GRID_H
 
 #include <QOpenGLFunctions>
+#include "square.h"
 
 class Grid
 {
 public:
-    // numbering for columns & rows starts at 0
-    //  ex) there's 16 columns but to access the last one you'd say you want index 15
-    static float columns;
-    static float rows;
+    Grid();
 
-    static float marginBottom;
-    static float marginTop;
-    static float marginLeft;
-    static float marginRight;
+    float columns;
+    float rows;
 
-    static float height; // percentage of page in terms of opengl
-    static float width;  // in terms of opengl
+    float marginBottom;
+    float marginTop;
+    float marginLeft;
+    float marginRight;
+
+    float height; // percentage of page in terms of opengl
+    float width;  // in terms of opengl
 
     // The outside borders of the grid
-    static float top_border;
-    static float left_border;
-    static float bottom_border;
-    static float right_border;
+    float top_border;
+    float left_border;
+    float bottom_border;
+    float right_border;
 
-    // How much to increment
-    static float xIncrement;
-    static float yIncrement;
+    // Height/width of each square in the grid
+    float squareWidth;
+    float squareHeight;
 
-    static void draw();
-    static void drawSquare(float col, float row); // Draws a square at a specific column & row
-    static void drawSquareV2(float x, float y);   // draws a square at a specific coordinate based on opengl coordinate system
+    void draw();
+    void drawSquare(float col, float row, float r, float g, float b); // Draws a square at a specific column & row
+    void drawSquareBlue(float x, float y);                            // draws a square at a specific coordinate based on opengl coordinate system
+    void drawMap();
 };
 
 #endif // GRID_H

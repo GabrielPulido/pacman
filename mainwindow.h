@@ -9,6 +9,7 @@
 #include "glfw3.h"
 #include "grid.h"
 #include "pacman.h"
+#include "square.h"
 
 class MainWindow : public QOpenGLWindow
 {
@@ -33,5 +34,6 @@ private:
     QOpenGLContext* context;
     QOpenGLFunctions* openGLFunctions;
     Pacman pacman;
+    Grid grid;
 };
 #endif // MAINWINDOW_H
