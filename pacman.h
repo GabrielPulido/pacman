@@ -5,14 +5,20 @@
 
 class Pacman
 {
+    //pacman's location
+    float x;
+    float y;
+
 public:
 
     Pacman();
-    Pacman(double, double);
+    Pacman(float, float);
 
-    //pacman's location
-    double x;
-    double y;
+    void setx(float);
+    void sety(float);
+    float getx();
+    float gety();
+
 
     //the direction pacman is going to
     enum Direction {right = 1, up = 2, left = 3, down = 4};

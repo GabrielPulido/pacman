@@ -52,7 +52,10 @@ void MainWindow::paintGL()
     glLoadIdentity();
 
     grid.draw();
-    grid.drawSquare(pacman.x, pacman.y, 1.0f, 1.0f, 0.0f);
+    grid.drawMap();
+    grid.drawAllDots();
+    grid.drawSquare(pacman.getx(), pacman.gety(), 1.0f, 1.0f, 0.0f);
+
 
     //always call this after you're done drawing everything
     glFlush();
@@ -87,17 +90,33 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 
 void MainWindow::UpdateAnimation() {
     float num = 1.0f;
+    int x = pacman.getx();
+    int y = pacman.gety();
+
     if(pacman.direction == pacman.up) {
-        pacman.y += num;
+        int newY = y + num;
+        if(grid.squares[x][newY].boundary == false) {
+            pacman.sety(newY);
+        }
     }
     if(pacman.direction == pacman.down) {
-        pacman.y -= num;
+        int newY = y - num;
+        if(grid.squares[x][newY].boundary == false) {
+            pacman.sety(newY);
+        }
     }
     if(pacman.direction == pacman.left) {
-        pacman.x -= num;
+        int newX = x - num;
+        if(grid.squares[newX][y].boundary == false) {
+            pacman.setx(newX);
+        }
     }
     if(pacman.direction == pacman.right) {
-        pacman.x += num;
+        int newX = x + num;
+        if(grid.squares[newX][y].boundary == false) {
+            pacman.setx(newX);
+        }
     }
+
     this->update();
 }
