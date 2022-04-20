@@ -1,6 +1,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "grid.h"
 
 class Character
 {
@@ -18,6 +19,8 @@ public:
     float getRed();
     float getGreen();
     float getBlue();
+
+    void updatePosition(Grid& grid);
 
     float color[3];
 

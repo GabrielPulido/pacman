@@ -1,4 +1,5 @@
 #include "character.h"
+#include "grid.h"
 
 Character::Character()
 {
@@ -66,5 +67,46 @@ float Character::getGreen()
 float Character::getBlue()
 {
     return color[2];
+}
+
+void Character::updatePosition(Grid& grid)
+{
+    float num = 1.0f;
+    int x = (int)this->x;
+    int y = (int)this->y;
+
+    // changes pacman's direction based on what key you clicked
+    if (direction == up)
+    {
+        int newY = y + num;
+        if (grid.squares[x][newY].getBoundary() == false)
+        {
+            sety(newY);
+        }
+    }
+    if (direction == down)
+    {
+        int newY = y - num;
+        if (grid.squares[x][newY].getBoundary() == false)
+        {
+            sety(newY);
+        }
+    }
+    if (direction == left)
+    {
+        int newX = x - num;
+        if (grid.squares[newX][y].getBoundary() == false)
+        {
+            setx(newX);
+        }
+    }
+    if (direction == right)
+    {
+        int newX = x + num;
+        if (grid.squares[newX][y].getBoundary() == false)
+        {
+            setx(newX);
+        }
+    }
 }
 

@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
     timer->start(100);
 
     //set up ghost
-    ghost = Ghost(13.0f, 13.0f, 1.0f, 0.0f, 0.0f);
+    ghost = Ghost(12.0f, 5.0f, 1.0f, 0.0f, 0.0f);
 }
 
 MainWindow::~MainWindow()
@@ -98,49 +98,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::UpdateAnimation()
 {
-    float num = 1.0f;
-    int x = pacman.getx();
-    int y = pacman.gety();
-
-    // changes pacman's direction based on what key you clicked
-    if (pacman.direction == pacman.up)
-    {
-        int newY = y + num;
-        if (grid.squares[x][newY].getBoundary() == false)
-        {
-            pacman.sety(newY);
-        }
-    }
-    if (pacman.direction == pacman.down)
-    {
-        int newY = y - num;
-        if (grid.squares[x][newY].getBoundary() == false)
-        {
-            pacman.sety(newY);
-        }
-    }
-    if (pacman.direction == pacman.left)
-    {
-        int newX = x - num;
-        if (grid.squares[newX][y].getBoundary() == false)
-        {
-            pacman.setx(newX);
-        }
-    }
-    if (pacman.direction == pacman.right)
-    {
-        int newX = x + num;
-        if (grid.squares[newX][y].getBoundary() == false)
-        {
-            pacman.setx(newX);
-        }
-    }
+    pacman.updatePosition(grid);
+    ghost.randomizeDirection();
+    ghost.updatePosition(grid);
 
     //erase the dot
     grid.eraseDot(pacman.getx(), pacman.gety());
-
-
-    //
 
     this->update();
 }
