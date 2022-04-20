@@ -36,6 +36,7 @@ public:
     void drawMap();
     void drawDot(float, float);
     void drawAllDots();
+    void eraseDot(float, float);
 
     Square squares[26][26];
 };

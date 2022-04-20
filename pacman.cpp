@@ -12,7 +12,6 @@ Pacman::Pacman(float x, float y) {
     this->x = x;
     this->y = y;
     Direction direction;
-    Direction oldDirection;
 }
 
 void Pacman::setx(float x)

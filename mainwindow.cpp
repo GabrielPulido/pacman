@@ -2,25 +2,25 @@
 
 MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
 {
-    //Tells qt that we're using opengl instead of qpainter
+    // Tells qt that we're using opengl instead of qpainter
     setSurfaceType(QWindow::OpenGLSurface);
 
-    //format
+    // format
     QSurfaceFormat format;
     format.setProfile(QSurfaceFormat::CompatibilityProfile);
-    format.setVersion(2,1);
+    format.setVersion(2, 1);
     setFormat(format);
 
-    //context
+    // context
     context = new QOpenGLContext;
     context->setFormat(format);
     context->create();
     context->makeCurrent(this);
     openGLFunctions = context->functions();
 
-    //start timer
+    // start timer
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()),this, SLOT(UpdateAnimation()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(UpdateAnimation()));
     timer->start(100);
 }
 
@@ -33,17 +33,17 @@ void MainWindow::initializeGL()
     resizeGL(this->width(), this->height());
 }
 
-//Ignore this code, it just makes it look good when it resizes
+// Ignore this code, it just makes it look good when it resizes
 void MainWindow::resizeGL(int w, int h)
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glViewport(0,0,w,h);
+    glViewport(0, 0, w, h);
 
-    qreal aspectratio = qreal(w)/qreal(h);
+    qreal aspectratio = qreal(w) / qreal(h);
 
-    glOrtho(-1 * aspectratio, 1 * aspectratio, -1,1,1,-1);
+    glOrtho(-1 * aspectratio, 1 * aspectratio, -1, 1, 1, -1);
 }
 
 void MainWindow::paintGL()
@@ -56,12 +56,11 @@ void MainWindow::paintGL()
     grid.drawAllDots();
     grid.drawSquare(pacman.getx(), pacman.gety(), 1.0f, 1.0f, 0.0f);
 
-
-    //always call this after you're done drawing everything
+    // always call this after you're done drawing everything
     glFlush();
 }
 
-//Ignore this code, it just makes it look good when it resizes
+// Ignore this code, it just makes it look good when it resizes
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     resizeGL(this->width(), this->height());
@@ -73,50 +72,71 @@ void MainWindow::paintEvent(QPaintEvent *event)
     paintGL();
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event){
-    if (event->key() == Qt::Key_Up) {
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Up)
+    {
         pacman.direction = pacman.up;
     }
-    if (event->key() == Qt::Key_Down) {
+    if (event->key() == Qt::Key_Down)
+    {
         pacman.direction = pacman.down;
     }
-    if (event->key() == Qt::Key_Left) {
+    if (event->key() == Qt::Key_Left)
+    {
         pacman.direction = pacman.left;
     }
-    if (event->key() == Qt::Key_Right) {
+    if (event->key() == Qt::Key_Right)
+    {
         pacman.direction = pacman.right;
     }
 }
 
-void MainWindow::UpdateAnimation() {
+void MainWindow::UpdateAnimation()
+{
     float num = 1.0f;
     int x = pacman.getx();
     int y = pacman.gety();
 
-    if(pacman.direction == pacman.up) {
+    // changes pacman's direction based on what key you clicked
+    if (pacman.direction == pacman.up)
+    {
         int newY = y + num;
-        if(grid.squares[x][newY].boundary == false) {
+        if (grid.squares[x][newY].getBoundary() == false)
+        {
             pacman.sety(newY);
         }
     }
-    if(pacman.direction == pacman.down) {
+    if (pacman.direction == pacman.down)
+    {
         int newY = y - num;
-        if(grid.squares[x][newY].boundary == false) {
+        if (grid.squares[x][newY].getBoundary() == false)
+        {
             pacman.sety(newY);
         }
     }
-    if(pacman.direction == pacman.left) {
+    if (pacman.direction == pacman.left)
+    {
         int newX = x - num;
-        if(grid.squares[newX][y].boundary == false) {
+        if (grid.squares[newX][y].getBoundary() == false)
+        {
             pacman.setx(newX);
         }
     }
-    if(pacman.direction == pacman.right) {
+    if (pacman.direction == pacman.right)
+    {
         int newX = x + num;
-        if(grid.squares[newX][y].boundary == false) {
+        if (grid.squares[newX][y].getBoundary() == false)
+        {
             pacman.setx(newX);
         }
     }
+
+    //erase the dot
+    grid.eraseDot(pacman.getx(), pacman.gety());
+
+
+    //
 
     this->update();
 }

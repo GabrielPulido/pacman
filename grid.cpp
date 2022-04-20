@@ -16,13 +16,14 @@ Grid::Grid()
     squareWidth = width / columns;
     squareHeight = height / rows;
 
-    //initialize squares
-    for(int i = 1; i <= columns; i++) {
-        for(int j = 1; j <= rows; j++) {
-            squares[i][j] = Square(i, j, false);
+    // initialize squares
+    for (int i = 1; i <= columns; i++)
+    {
+        for (int j = 1; j <= rows; j++)
+        {
+            squares[i][j] = Square(i, j, false); // by default they aren't boundaries
         }
     }
-
 }
 
 // draws grid
@@ -58,7 +59,7 @@ void Grid::draw()
 }
 
 // draws a square in the specific column & row you specify
-//ex) an input of (1,1) will draw a square on the bottom left corner of the grid
+// ex) an input of (1,1) will draw a square on the bottom left corner of the grid
 void Grid::drawSquare(float desiredColumn, float desiredRow, float r, float g, float b)
 {
 
@@ -78,127 +79,141 @@ void Grid::drawSquare(float desiredColumn, float desiredRow, float r, float g, f
     glEnd();
 }
 
- void Grid::drawBoundary(float desiredColumn, float desiredRow)
+void Grid::drawBoundary(float desiredColumn, float desiredRow)
 {
-     float left = left_border + (squareWidth * (desiredColumn - 1));
-     float top = bottom_border + (squareHeight * desiredRow);
+    float left = left_border + (squareWidth * (desiredColumn - 1));
+    float top = bottom_border + (squareHeight * desiredRow);
 
-     float bottom = top - squareHeight;
-     float right = left + squareWidth;
+    float bottom = top - squareHeight;
+    float right = left + squareWidth;
 
-     //register it as a boundary in our squares[][] array so that pacman or the ghosts don't go through it
-     int x = (int)desiredColumn;
-     int y = (int)desiredRow;
+    // register it as a boundary in our squares[][] array so that pacman or the ghosts don't go through it
+    int x = (int)desiredColumn;
+    int y = (int)desiredRow;
 
-     squares[x][y].boundary = true;
+    squares[x][y].setBoundary(true); // lets the squares array know that this is a boundary
 
-     // draw square
-     glBegin(GL_QUADS);
-     glColor3f(0.0f, 0.0f, 1.0f);
-     glVertex2f(left, top);
-     glVertex2f(left, bottom);
-     glVertex2f(right, bottom);
-     glVertex2f(right, top);
-     glEnd();
- }
+    // draw square
+    glBegin(GL_QUADS);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex2f(left, top);
+    glVertex2f(left, bottom);
+    glVertex2f(right, bottom);
+    glVertex2f(right, top);
+    glEnd();
+}
 
- //This function uses fixed values so if you change the size of the grid, it'll mess up the map
- void Grid::drawMap()
- {   
-     //draw horizontal strips
-     for(int i = 9; i <= 18; i++) {
-         drawBoundary(i, rows-1); //top
-         drawBoundary(i, 2); //bottom
-     }
-
-
-     //draw upper right curl
-     for(int i = rows-1; i >= 23; i--) {
-        drawBoundary(columns-2, i); //draws vertical strip on the left
-     }
-     for(int i = rows; i >= 21; i--) {
-        drawBoundary(columns, i); //draws vertical strip on the right
-     }
-     for(int i = columns-1; i >= 21; i--) {
-         drawBoundary(i, 21); //draws bottom horizontal strip
-     }
-     for(int i = columns-2; i >= 21; i--) {
-        drawBoundary(i, 23); //top horizontal strip
-     }
-     drawBoundary(21, 22); //square that connects the 2 above strips
-
-
-     //draw upper left curl
-     for(int i = rows; i >= 16; i--) {
-        drawBoundary(1, i); //left vertical strip
-     }
-     for(int i = rows-1; i>=18; i--) {
-         drawBoundary(3, i); //right vertical strip
-     }
-     for(int i = 1; i <= 8; i++) {
-         drawBoundary(i, 16); //draws bottom horizontal strip
-     }
-     for(int i = 3; i <= 8; i++) {
-         drawBoundary(i, 18); //top horizontal strip
-     }
-     drawBoundary(8, 17);
-
-
-     //bottom left curl
-    for(int i = 1; i <= 10; i++) {
-        drawBoundary(1, i); //left strip
+// This function uses fixed values so if you change the size of the grid, it'll mess up the map
+void Grid::drawMap()
+{
+    // draw horizontal strips
+    for (int i = 9; i <= 18; i++)
+    {
+        drawBoundary(i, rows - 1); // top
+        drawBoundary(i, 2);        // bottom
     }
-    for(int i = 2; i <= 8; i++) {
-        drawBoundary(3, i); //right strip
+
+    // draw upper right curl
+    for (int i = rows - 1; i >= 23; i--)
+    {
+        drawBoundary(columns - 2, i); // draws vertical strip on the left
     }
-    for(int i = 1; i <= 8; i++) {
-        drawBoundary(i, 10); //top horizontal strip
+    for (int i = rows; i >= 21; i--)
+    {
+        drawBoundary(columns, i); // draws vertical strip on the right
     }
-    for(int i = 3; i <= 8; i++) {
-        drawBoundary(i, 8); //bottom horizontal strip
+    for (int i = columns - 1; i >= 21; i--)
+    {
+        drawBoundary(i, 21); // draws bottom horizontal strip
+    }
+    for (int i = columns - 2; i >= 21; i--)
+    {
+        drawBoundary(i, 23); // top horizontal strip
+    }
+    drawBoundary(21, 22); // square that connects the 2 above strips
+
+    // draw upper left curl
+    for (int i = rows; i >= 16; i--)
+    {
+        drawBoundary(1, i); // left vertical strip
+    }
+    for (int i = rows - 1; i >= 18; i--)
+    {
+        drawBoundary(3, i); // right vertical strip
+    }
+    for (int i = 1; i <= 8; i++)
+    {
+        drawBoundary(i, 16); // draws bottom horizontal strip
+    }
+    for (int i = 3; i <= 8; i++)
+    {
+        drawBoundary(i, 18); // top horizontal strip
+    }
+    drawBoundary(8, 17);
+
+    // bottom left curl
+    for (int i = 1; i <= 10; i++)
+    {
+        drawBoundary(1, i); // left strip
+    }
+    for (int i = 2; i <= 8; i++)
+    {
+        drawBoundary(3, i); // right strip
+    }
+    for (int i = 1; i <= 8; i++)
+    {
+        drawBoundary(i, 10); // top horizontal strip
+    }
+    for (int i = 3; i <= 8; i++)
+    {
+        drawBoundary(i, 8); // bottom horizontal strip
     }
     drawBoundary(8, 9);
 
-
-    //draw bottom right curl
-    for(int i = 1; i <= 10; i++) {
-        drawBoundary(columns, i); //right vertical strip
+    // draw bottom right curl
+    for (int i = 1; i <= 10; i++)
+    {
+        drawBoundary(columns, i); // right vertical strip
     }
-    for(int i = 2; i <= 8; i++) {
-        drawBoundary(columns-2, i); //left vertical strip
+    for (int i = 2; i <= 8; i++)
+    {
+        drawBoundary(columns - 2, i); // left vertical strip
     }
-    for(int i = columns; i >= 18; i--) {
-        drawBoundary(i, 10); //top horizontal strip
+    for (int i = columns; i >= 18; i--)
+    {
+        drawBoundary(i, 10); // top horizontal strip
     }
-    for(int i = columns - 2; i >= 18; i--) {
-        drawBoundary(i, 8); //bottom horizontal strip
+    for (int i = columns - 2; i >= 18; i--)
+    {
+        drawBoundary(i, 8); // bottom horizontal strip
     }
     drawBoundary(18, 9);
 
-
-    //draw ghost box
-    for(int i = 10; i <= 17; i++) {
+    // draw ghost box
+    for (int i = 10; i <= 17; i++)
+    {
         drawBoundary(i, 12);
-        if(i != 13 && i != 14) {
+        if (i != 13 && i != 14)
+        {
             drawBoundary(i, 14);
         }
     }
     drawBoundary(10, 13);
     drawBoundary(17, 13);
- }
+}
 
- void Grid::drawDot(float desiredColumn, float desiredRow)
- {
-     float leftOfSquare = left_border + (squareWidth * (desiredColumn - 1));
-     float topOfSquare = bottom_border + (squareHeight * desiredRow);
-     float bottomOfSquare = topOfSquare - squareHeight;
-     float rightOfSquare = leftOfSquare + squareWidth;
+void Grid::drawDot(float desiredColumn, float desiredRow)
+{
+    float leftOfSquare = left_border + (squareWidth * (desiredColumn - 1));
+    float topOfSquare = bottom_border + (squareHeight * desiredRow);
+    float bottomOfSquare = topOfSquare - squareHeight;
+    float rightOfSquare = leftOfSquare + squareWidth;
 
-     float val = 0.4; // this value is what controls how big the dot is
-     float left = leftOfSquare + (squareWidth * val);
-     float right = rightOfSquare - (squareWidth * val);
-     float top = topOfSquare - (squareWidth * val);
-     float bottom = bottomOfSquare + (squareWidth * val);
+    float val = 0.4; // this value is what controls how big the dot is
+    float left = leftOfSquare + (squareWidth * val);
+    float right = rightOfSquare - (squareWidth * val);
+    float top = topOfSquare - (squareWidth * val);
+    float bottom = bottomOfSquare + (squareWidth * val);
 
     // draw square
     glBegin(GL_QUADS);
@@ -208,17 +223,24 @@ void Grid::drawSquare(float desiredColumn, float desiredRow, float r, float g, f
     glVertex2f(right, bottom);
     glVertex2f(right, top);
     glEnd();
- }
+}
 
- void Grid::drawAllDots()
- {
-     //Iterate through squares array
-     for(int i = 1; i <= columns; i++) {
-         for(int j = 1; j <= rows; j++) {
-             if(squares[i][j].boundary == false) { //draw dots where there isn't boundaries
-                 drawDot(i, j);
-             }
-         }
-     }
- }
+void Grid::drawAllDots()
+{
+    // Iterate through squares array
+    for (int i = 1; i <= columns; i++)
+    {
+        for (int j = 1; j <= rows; j++)
+        {
+            if (squares[i][j].getBoundary() == false && squares[i][j].dot == true)
+            {
+                drawDot(i, j);  // draw dots where there isn't boundaries
+            }
+        }
+    }
+}
 
+void Grid::eraseDot(float x, float y)
+{
+    squares[(int)x][(int)y].dot = false;
+}
