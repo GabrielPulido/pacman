@@ -2,27 +2,16 @@
 #define PACMAN_H
 
 #include <string.h>
+#include "character.h"
 
-class Pacman
+class Pacman : public Character
 {
-    //pacman's location
-    float x;
-    float y;
 
 public:
 
     Pacman();
     Pacman(float, float);
-
-    void setx(float);
-    void sety(float);
-    float getx();
-    float gety();
-
-
-    //the direction pacman is going to
-    enum Direction {right = 1, up = 2, left = 3, down = 4};
-    Direction direction;
+    int lives = 3;
 };
 
 #endif // PACMAN_H
