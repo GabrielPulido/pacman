@@ -12,6 +12,14 @@ public:
     void sety(float);
     float getx();
     float gety();
+    void setColor(float, float, float);
+
+    //gets rgb color values of character
+    float getRed();
+    float getGreen();
+    float getBlue();
+
+    float color[3];
 
     //the direction pacman is going to
     enum Direction {right = 1, up = 2, left = 3, down = 4};

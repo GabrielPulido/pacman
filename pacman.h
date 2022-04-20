@@ -10,7 +10,6 @@ class Pacman : public Character
 public:
 
     Pacman();
-    Pacman(float, float);
     int lives = 3;
 };
 

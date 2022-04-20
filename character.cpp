@@ -46,3 +46,25 @@ float Character::gety()
     return y;
 }
 
+void Character::setColor(float r, float g, float b)
+{
+    color[0] = r;
+    color[1] = g;
+    color[2] = b;
+}
+
+float Character::getRed()
+{
+    return color[0];
+}
+
+float Character::getGreen()
+{
+    return color[1];
+}
+
+float Character::getBlue()
+{
+    return color[2];
+}
+

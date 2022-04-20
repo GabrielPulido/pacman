@@ -2,7 +2,5 @@
 
 Pacman::Pacman() : Character()
 {
-}
-
-Pacman::Pacman(float x, float y) : Character(x,y) {
+    setColor(1.0f, 1.0f, 0.0f);
 }

@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(UpdateAnimation()));
     timer->start(100);
+
+    //set up ghost
+    ghost = Ghost(13.0f, 13.0f, 1.0f, 0.0f, 0.0f);
 }
 
 MainWindow::~MainWindow()
@@ -54,7 +57,8 @@ void MainWindow::paintGL()
     grid.draw();
     grid.drawMap();
     grid.drawAllDots();
-    grid.drawSquare(pacman.getx(), pacman.gety(), 1.0f, 1.0f, 0.0f);
+    grid.drawSquare(pacman.getx(), pacman.gety(), pacman.getRed(), pacman.getGreen(), pacman.getBlue());
+    grid.drawSquare(ghost.getx(), ghost.gety(), ghost.getRed(), ghost.getGreen(), ghost.getBlue());
 
     // always call this after you're done drawing everything
     glFlush();

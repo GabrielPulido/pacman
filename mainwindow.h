@@ -10,6 +10,7 @@
 #include "grid.h"
 #include "pacman.h"
 #include "square.h"
+#include "ghost.h"
 
 class MainWindow : public QOpenGLWindow
 {
@@ -34,6 +35,7 @@ private:
     QOpenGLContext* context;
     QOpenGLFunctions* openGLFunctions;
     Pacman pacman;
+    Ghost ghost;
     Grid grid;
 };
 #endif // MAINWINDOW_H
