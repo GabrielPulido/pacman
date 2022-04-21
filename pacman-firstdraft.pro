@@ -11,6 +11,7 @@ CONFIG += c++11
 
 SOURCES += \
     character.cpp \
+    game.cpp \
     ghost.cpp \
     grid.cpp \
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     character.h \
+    game.h \
     ghost.h \
     grid.h \
     mainwindow.h \

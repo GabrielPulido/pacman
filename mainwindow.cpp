@@ -19,12 +19,20 @@ MainWindow::MainWindow(QWidget *parent) : QOpenGLWindow()
     openGLFunctions = context->functions();
 
     // start timer
-    QTimer *timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(UpdateAnimation()));
     timer->start(100);
 
     //set up ghost
-    ghost = Ghost(12.0f, 5.0f, 1.0f, 0.0f, 0.0f);
+    redGhost = Ghost(7.0f, 6.0f, 1.0f, 0.0f, 0.0f);
+    blueGhost = Ghost(22.0f, 13.0f, 0.0f, 1.0f, 1.0f);
+    orangeGhost = Ghost(5.0f, 13.0f, 1.0f, 0.5f, 0.0f);
+    pinkGhost = Ghost(13.0f, 18.0f, 1.0f, 0.0f, 0.5f);
+
+    allGhosts[0] = redGhost;
+    allGhosts[1] = blueGhost;
+    allGhosts[2] = orangeGhost;
+    allGhosts[3] = pinkGhost;
 }
 
 MainWindow::~MainWindow()
@@ -55,10 +63,39 @@ void MainWindow::paintGL()
     glLoadIdentity();
 
     grid.draw();
+
+    //If pacman touches a ghost, decrement lives & reset coordinates
+    if(pacman.isTouchingGhost(allGhosts) == true) {
+        pacman.lives--;
+
+        pacman.resetCoordinates();
+        for(int i = 0; i < 4; i++) {
+            allGhosts[i].resetCoordinates();
+        }
+    }
+
+    //if pacman has no more lives
+    if(pacman.lives < 0)  {
+        pacman.lives = 3; //reset to 3 lives
+
+        //reset all the dots:
+        for(int i = 1; i <= grid.columns; i++) {
+            for(int j = 1; j <= grid.rows; j++) {
+                    grid.squares[i][j].dot = true;
+            }
+        }
+    }
+
     grid.drawMap();
     grid.drawAllDots();
+
+    //draw pacman
     grid.drawSquare(pacman.getx(), pacman.gety(), pacman.getRed(), pacman.getGreen(), pacman.getBlue());
-    grid.drawSquare(ghost.getx(), ghost.gety(), ghost.getRed(), ghost.getGreen(), ghost.getBlue());
+
+    //draw all 4 ghosts
+    for(int i = 0; i < 4; i++) {
+        grid.drawSquare(allGhosts[i].getx(), allGhosts[i].gety(), allGhosts[i].getRed(), allGhosts[i].getGreen(), allGhosts[i].getBlue());
+    }
 
     // always call this after you're done drawing everything
     glFlush();
@@ -99,8 +136,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::UpdateAnimation()
 {
     pacman.updatePosition(grid);
-    ghost.randomizeDirection();
-    ghost.updatePosition(grid);
+
+    //randomize each ghost's direction then update their position on the grid
+    for(int i = 0; i < 4; i++) {
+        allGhosts[i].randomizeDirection();
+        allGhosts[i].updatePosition(grid);
+    }
 
     //erase the dot
     grid.eraseDot(pacman.getx(), pacman.gety());

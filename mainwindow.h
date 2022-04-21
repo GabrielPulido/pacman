@@ -11,6 +11,7 @@
 #include "pacman.h"
 #include "square.h"
 #include "ghost.h"
+#include "game.h"
 
 class MainWindow : public QOpenGLWindow
 {
@@ -35,7 +36,16 @@ private:
     QOpenGLContext* context;
     QOpenGLFunctions* openGLFunctions;
     Pacman pacman;
-    Ghost ghost;
+
+    Ghost redGhost;
+    Ghost blueGhost;
+    Ghost orangeGhost;
+    Ghost pinkGhost;
+    Ghost allGhosts[4];
+
     Grid grid;
+    Game game;
+
+    QTimer* timer;
 };
 #endif // MAINWINDOW_H

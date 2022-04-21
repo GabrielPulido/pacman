@@ -1,10 +1,13 @@
 #include "character.h"
 #include "grid.h"
 
+//Default coordinates of a character are (13,7) if none are specified
 Character::Character()
 {
-    x = 13.0;
-    y = 7.0;
+    x = 13.0f;
+    y = 7.0f;
+    startingX = 13.0f;
+    startingY = 7.0f;
     Direction direction;
 }
 
@@ -12,13 +15,17 @@ Character::Character(float x, float y)
 {
     this->x = x;
     this->y = y;
+    this->startingX = x;
+    this->startingY = y;
     Direction direction;
 }
 
+//we have setx & sety functions bc it prevents the user from going outside of the grid
+//be sure to change the 25 value if you resize the grid
 void Character::setx(float x)
 {
-    if(x > 25) {
-        x = 25;
+    if(x > 27) {
+        x = 27;
     }
     if(x < 1) {
         x = 1;
@@ -28,8 +35,8 @@ void Character::setx(float x)
 
 void Character::sety(float y)
 {
-    if(y > 25) {
-        y = 25;
+    if(y > 26) {
+        y = 26;
     }
     if(y < 1) {
         y = 1;
@@ -46,6 +53,23 @@ float Character::gety()
 {
     return y;
 }
+
+float Character::getxStartingPosition()
+{
+    return startingX;
+}
+
+float Character::getyStartingPosition()
+{
+    return startingY;
+}
+
+void Character::resetCoordinates()
+{
+    x = startingX;
+    y = startingY;
+}
+
 
 void Character::setColor(float r, float g, float b)
 {
@@ -69,6 +93,7 @@ float Character::getBlue()
     return color[2];
 }
 
+//updates the xy coordinates/position of the character based on their direction property
 void Character::updatePosition(Grid& grid)
 {
     float num = 1.0f;
@@ -79,6 +104,8 @@ void Character::updatePosition(Grid& grid)
     if (direction == up)
     {
         int newY = y + num;
+
+        //these if statements prevents characters from going through the blue barriers
         if (grid.squares[x][newY].getBoundary() == false)
         {
             sety(newY);
