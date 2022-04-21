@@ -63,20 +63,28 @@ void MainWindow::paintGL()
     glLoadIdentity();
 
     grid.draw();
+    grid.drawMap();
 
     //If pacman touches a ghost, decrement lives & reset coordinates
     if(pacman.isTouchingGhost(allGhosts) == true) {
         pacman.lives--;
+        pacman.lost = true;
+    }
 
-        pacman.resetCoordinates();
-        for(int i = 0; i < 4; i++) {
-            allGhosts[i].resetCoordinates();
-        }
+    grid.drawAllDots();
+
+    //draw pacman
+    grid.drawSquare(pacman.getx(), pacman.gety(), pacman.getRed(), pacman.getGreen(), pacman.getBlue());
+
+    //draw all 4 ghosts
+    for(int i = 0; i < 4; i++) {
+        grid.drawSquare(allGhosts[i].getx(), allGhosts[i].gety(), allGhosts[i].getRed(), allGhosts[i].getGreen(), allGhosts[i].getBlue());
     }
 
     //if pacman has no more lives
     if(pacman.lives < 0)  {
         pacman.lives = 3; //reset to 3 lives
+        pacman.lost = true;
 
         //reset all the dots:
         for(int i = 1; i <= grid.columns; i++) {
@@ -86,15 +94,16 @@ void MainWindow::paintGL()
         }
     }
 
-    grid.drawMap();
-    grid.drawAllDots();
+    //If the user loses, give them 3 seconds to get ready to play again
+    if(pacman.lost == true) {
+        //reset coordinates for all characters
+        pacman.resetCoordinates();
+        for(int i = 0; i < 4; i++) {
+            allGhosts[i].resetCoordinates();
+        }
 
-    //draw pacman
-    grid.drawSquare(pacman.getx(), pacman.gety(), pacman.getRed(), pacman.getGreen(), pacman.getBlue());
-
-    //draw all 4 ghosts
-    for(int i = 0; i < 4; i++) {
-        grid.drawSquare(allGhosts[i].getx(), allGhosts[i].gety(), allGhosts[i].getRed(), allGhosts[i].getGreen(), allGhosts[i].getBlue());
+        QThread::sleep(2);
+        pacman.lost = false;
     }
 
     // always call this after you're done drawing everything

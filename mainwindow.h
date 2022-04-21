@@ -5,6 +5,7 @@
 #include <QOpenGLWindow>
 #include <QSurfaceFormat>
 #include <QOpenGLFunctions>
+#include <QThread>
 #include <QtOpenGL>
 #include "glfw3.h"
 #include "grid.h"
@@ -12,6 +13,7 @@
 #include "square.h"
 #include "ghost.h"
 #include "game.h"
+
 
 class MainWindow : public QOpenGLWindow
 {

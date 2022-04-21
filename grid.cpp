@@ -77,6 +77,7 @@ void Grid::drawSquare(float desiredColumn, float desiredRow, float r, float g, f
     glEnd();
 }
 
+//draws a blue square in a specific place and it sets that value in the squares[][] array to be a boundary
 void Grid::drawBoundary(float desiredColumn, float desiredRow)
 {
     float left = left_border + (squareWidth * (desiredColumn - 1));

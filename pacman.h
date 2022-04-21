@@ -13,6 +13,7 @@ public:
     Pacman();
     bool isTouchingGhost(Ghost ghosts[4]); //checks if he's touching any of the ghosts
     int lives = 3;
+    bool lost = false;
 };
 
 #endif // PACMAN_H
