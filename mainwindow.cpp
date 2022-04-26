@@ -106,6 +106,8 @@ void MainWindow::paintGL()
         pacman.lost = false;
     }
 
+    //implement a function for when the user beats the game (just add the dots back and let them restart)
+
     // always call this after you're done drawing everything
     glFlush();
 }

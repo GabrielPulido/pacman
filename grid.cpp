@@ -105,107 +105,201 @@ void Grid::drawBoundary(float desiredColumn, float desiredRow)
 // This function uses fixed values so if you change the size of the grid, it'll mess up the map
 void Grid::drawMap()
 {
-    // draw horizontal strips
-    for (int i = 9; i <= 18; i++)
+    //ghost box
+    for (int i = 11; i <= 17; i++)
     {
-        drawBoundary(i, rows - 1); // top
-        drawBoundary(i, 2);        // bottom
-    }
-
-
-    // draw upper right curl
-    for (int i = rows - 1; i >= 23; i--)
-    {
-        drawBoundary(columns - 2, i); // draws vertical strip on the left
-    }
-    for (int i = rows; i >= 21; i--)
-    {
-        drawBoundary(columns, i); // draws vertical strip on the right
-    }
-    for (int i = columns - 1; i >= 21; i--)
-    {
-        drawBoundary(i, 21); // draws bottom horizontal strip
-    }
-    for (int i = columns - 2; i >= 21; i--)
-    {
-        drawBoundary(i, 23); // top horizontal strip
-    }
-    drawBoundary(21, 22); // square that connects the 2 above strips
-
-
-    // draw upper left curl
-    for (int i = rows; i >= 21; i--)
-    {
-        drawBoundary(1, i); // left vertical strip
-    }
-    for (int i = rows - 1; i >= 23; i--)
-    {
-        drawBoundary(3, i); // right vertical strip
-    }
-    for (int i = 2; i <= 5; i++)
-    {
-        drawBoundary(i, 21); // draws bottom horizontal strip
-    }
-    for (int i = 4; i <= 5; i++)
-    {
-        drawBoundary(i, 23); // top horizontal strip
-    }
-    drawBoundary(5, 22);
-
-
-    // bottom left curl
-    for (int i = 1; i <= 5; i++)
-    {
-        drawBoundary(1, i); // left strip
-    }
-    for (int i = 2; i <= 3; i++)
-    {
-        drawBoundary(3, i); // right strip
-    }
-    for (int i = 1; i <= 5; i++)
-    {
-        drawBoundary(i, 5); // top horizontal strip
-    }
-    for (int i = 3; i <= 5; i++)
-    {
-        drawBoundary(i, 3); // bottom horizontal strip
-    }
-    drawBoundary(5, 4);
-
-
-    // draw bottom right curl
-    for (int i = 1; i <= 5; i++)
-    {
-        drawBoundary(columns, i); // right vertical strip
-    }
-    for (int i = 2; i <= 3; i++)
-    {
-        drawBoundary(columns - 2, i); // left vertical strip
-    }
-    for (int i = columns-1; i >= 21; i--)
-    {
-        drawBoundary(i, 5); // top horizontal strip
-    }
-    for (int i = columns - 2; i >= 21; i--)
-    {
-        drawBoundary(i, 3); // bottom horizontal strip
-    }
-    drawBoundary(21, 4);
-
-    // draw ghost box
-    for (int i = 10; i <= 17; i++)
-    {
-        drawBoundary(i, 11);
-        if (i != 13 && i != 14)
+        drawBoundary(i, 11);//bottom bar
+        if (!(i >12)||!(i<16))
         {
-            drawBoundary(i, 14);
+            drawBoundary(i, 14);//top bar
         }
     }
     for(int i = 11; i <= 14; i++) {
-        drawBoundary(10, i);
-        drawBoundary(17, i);
+        drawBoundary(11, i);//left side
+        drawBoundary(17, i);//right side
+    }
+
+    //vertical lines next to ghost box
+    for(int i = 10; i <= 12; i++) {
+        drawBoundary(8, i);//left side
+        drawBoundary(20, i);//right side
+    }
+
+    //top center stacked row
+    for(int i = 13; i <= 15; i++)
+    {
+        drawBoundary(i, 25);
+    }
+    drawBoundary(14, 24);
+
+    //horz lines at top
+    for(int i = 3; i <= 25; i++)
+    {
+        if((i > 2 && i < 5)||(i > 23 && i < 26)){
+            drawBoundary(i, 24);
+            drawBoundary(i, 23);
+            drawBoundary(i, 20);
+
+        }
+
+        if((i > 6 && i < 10) || (i > 18 && i < 22)){
+            drawBoundary(i, 24);
+            drawBoundary(i, 23);
+        }
+    }
+
+    //symmetric top Ts
+    for(int i = 8; i <= 20; i++)
+    {
+        if((i > 7 && i < 12) || (i > 16 && i < 21)){
+            drawBoundary(i, 17);
+        }
+    }
+    for(int i = 15; i <= 19; i++){
+        drawBoundary(8, i);
+        drawBoundary(20, i);
+    }
+
+    //middle top T
+    for(int i = 12; i <= 16; i++){
+        drawBoundary(i, 22);
+    }
+    for(int i = 18; i <= 22; i++){
+        drawBoundary(14, i);
+    }
+
+    //T below ghost box
+    for (int i = 11; i <= 17; i++)
+    {
+        drawBoundary(i, 8);//horizontal
+
+    }
+    for (int i = 5; i <=8; i++)
+    {
+        drawBoundary(14,i);//vertical
+    }
+
+    //horz lines next to bottom T
+    for (int i = 8; i <= 20; i++){
+        if (i==8||i==9||i==19||i==20){
+            drawBoundary(i, 6);
+        }
+    }
+
+    //cup under T
+    for (int i = 11; i <= 17; i++)
+    {
+        drawBoundary(i, 3);//horizontal
+
+    }
+    drawBoundary(11, 4);
+    drawBoundary(17,4);
+
+    //parts on same row as cup
+    //horz
+    for(int i = 3; i <= 25; i++)
+    {
+        if(i > 2 && i < 9){
+            drawBoundary(i, 3);
+        }
+        if(i > 18 && i < 25){
+            drawBoundary(i, 3);
+        }
+    }
+    //vert
+    drawBoundary(6, 4);
+    drawBoundary(21, 4);
+
+    //right angles
+    //horz
+    for(int i = 3; i <= 25; i++)
+    {
+        if(i > 2 && i < 6){
+            drawBoundary(i, 8);
+        }
+        if(i < 26 && i > 22){
+            drawBoundary(i, 8);
+        }
+    }
+    //vert
+    for(int i = 6; i <= 8; i++){
+        drawBoundary(5,i);
+        drawBoundary(23, i);
+    }
+
+    //lines by right angle corner
+    for(int i = 1; i <=27; i++)
+    {
+        if(i < 4){
+            drawBoundary(i,5);
+        }
+        if(i > 24){
+            drawBoundary(i,5);
+        }
+    }
+
+    //boundaries
+    //bottom boxes next to vertical lines
+        //vertical part
+    for(int i = 10; i <= 12; i++) {
+        drawBoundary(4, i);//left side
+        drawBoundary(24, i);//right side
+    }
+
+        //horizontal part
+    for (int i = 1; i <= 27; i++)
+    {
+        if (!(i >4)||!(i<24))
+        {
+            drawBoundary(i, 12);//top bar
+            drawBoundary(i, 11);//fill bar
+            drawBoundary(i, 10);//bottom bar
+        }
+    }
+
+    //bottom boundaries
+        //vertical boundaries
+    for(int i = 1; i <= 12; i++) {
+        drawBoundary(1, i);//left side
+        drawBoundary(27, i);//right side
+    }
+        //horizontal boundaries
+    for (int i = 1; i <= 27; i++)
+    {
+        drawBoundary(i, 1);//bottom line
+    }
+
+    //top boxes next to vertical lines
+        //vertical part
+    for(int i = 15; i <= 17; i++) {
+        drawBoundary(4, i);//left side
+        drawBoundary(24, i);//right side
+    }
+
+        //horizontal part
+    for (int i = 1; i <= 27; i++)
+    {
+        if (!(i >4)||!(i<24))
+        {
+            drawBoundary(i, 15);//top bar
+            drawBoundary(i, 16);//fill bar
+            drawBoundary(i, 17);//bottom bar
+        }
+    }
+
+    //top boundaries
+        //vertical boundaries
+    for(int i = 15; i <= 26; i++) {
+        drawBoundary(1, i);//left side
+        drawBoundary(27, i);//right side
+    }
+        //horizontal boundaries
+    for (int i = 1; i <= 27; i++)
+    {
+        drawBoundary(i, 26);//bottom line
     }
 }
+
 
 void Grid::drawDot(float desiredColumn, float desiredRow)
 {
