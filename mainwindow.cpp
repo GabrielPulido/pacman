@@ -148,11 +148,9 @@ void MainWindow::UpdateAnimation()
 {
     pacman.updatePosition(grid);
 
-    //randomize each ghost's direction then update their position on the grid
-    for(int i = 0; i < 4; i++) {
-        allGhosts[i].randomizeDirection();
-        allGhosts[i].updatePosition(grid);
-    }
+    //only moving redghost to test pathfinding
+    allGhosts[0].redDirection(pacman, grid);
+    allGhosts[0].updatePosition(grid);
 
     //erase the dot
     grid.eraseDot(pacman.getx(), pacman.gety());
