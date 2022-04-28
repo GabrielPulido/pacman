@@ -334,8 +334,9 @@ void Grid::drawAllDots()
         {
             if (squares[i][j].getBoundary() == false && squares[i][j].dot == true)
             {
-                if(!(i > 11 && j >= 12) || !(i < 17 && j <= 14));
+                if(!(i > 11 && j >= 12) || !(i < 17 && j <= 14)){
                 drawDot(i, j);  // draw dots where there isn't boundaries
+                }
             }
         }
     }
