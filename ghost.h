@@ -8,7 +8,7 @@ class Ghost : public Character
 public:
     Ghost();
     Ghost(float, float, float, float, float);
-    void randomizeDirection();
+    void redDirection(Character pacman, Grid &grid);
 };
 
 #endif // GHOST_H
