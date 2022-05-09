@@ -149,8 +149,18 @@ void MainWindow::UpdateAnimation()
     pacman.updatePosition(grid);
 
     //only moving redghost to test pathfinding
-    allGhosts[0].redDirection(pacman, grid);
-    allGhosts[0].updatePosition(grid);
+        allGhosts[0].redDirection(pacman, grid);
+        allGhosts[0].updatePosition(grid);
+
+        allGhosts[1].blueDirection(pacman, grid);
+        allGhosts[1].updatePosition(grid);
+
+        allGhosts[2].orangeDirection(pacman, grid);
+        allGhosts[2].updatePosition(grid);
+
+        allGhosts[3].pinkDirection(pacman, grid);
+        allGhosts[3].updatePosition(grid);
+
 
     //erase the dot
     grid.eraseDot(pacman.getx(), pacman.gety());
